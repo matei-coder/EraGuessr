@@ -27,7 +27,9 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 // Cloud Firestore — used for the realtime leaderboard.
-export const db = getFirestore(app);
+// We use a DEDICATED database ("eraguessr") instead of "(default)" so this game
+// never touches the rules/data of the other app sharing this project.
+export const db = getFirestore(app, 'eraguessr');
 
 // Firebase AI Logic — Gemini Developer API backend.
 // Provision once with: `firebase init ailogic` (else PERMISSION_DENIED).

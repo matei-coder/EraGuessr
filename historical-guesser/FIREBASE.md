@@ -28,28 +28,25 @@ browser/device to watch scores sync in realtime.
 
 ## Prerequisites for the live features
 
-### 1. Firestore leaderboard — deploy the rules ⚠️ READ THIS FIRST
+### 1. Firestore leaderboard — dedicated database (isolated & safe)
 
-The leaderboard reads/writes the `players` collection. It needs the rules in
-`firestore.rules` to be live.
+To avoid touching the `(default)` database (shared with the *Stefan Gym Tracker*
+app), this game uses a **dedicated Firestore database named `eraguessr`**:
 
-> **Warning:** This project's `(default)` Firestore database is **shared across
-> the whole project**, including the existing *Stefan Gym Tracker* app.
-> `firebase deploy --only firestore:rules` **replaces ALL rules** for that
-> database. If another app relies on its own rules, deploying these as-is will
-> break it.
+- Client: `getFirestore(app, 'eraguessr')` in `src/firebase.js`.
+- Rules deploy targets it via `"database": "eraguessr"` in `firebase.json`, so
+  `firebase deploy --only firestore:rules` only ever affects this game's DB.
 
-Safe options:
-
-- **Merge** the `match /players/{playerId} { ... }` block from `firestore.rules`
-  into the project's existing rules (in the Firebase Console), then publish.
-- **Or** isolate this game in a dedicated Firestore database and point
-  `getFirestore(app, '<db-id>')` at it, so the default DB is untouched.
-
-Only if you are sure nothing else depends on the default DB's rules:
+Creating an additional (named) database **requires the Blaze plan** (the free
+Spark plan only allows the single default DB). Once the project is on Blaze:
 
 ```bash
 cd historical-guesser
+# 1. Create the isolated database (one-time), colocated with the default DB:
+firebase firestore:databases:create eraguessr \
+  --location=europe-west3 --edition=standard --project hackbase-7fb0e
+
+# 2. Deploy the rules to it (safe — only the eraguessr DB):
 firebase deploy --only firestore:rules --project hackbase-7fb0e
 ```
 

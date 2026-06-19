@@ -1,0 +1,4 @@
+# EraGuessr backend dependencies
+firebase-admin>=6.5.0      # Admin SDK -> Cloud Firestore (server-side, bypasses rules)
+google-genai>=1.0.0        # Gemini API client (uses a Gemini API key)
+python-dotenv>=1.0.1       # loads config from .env
