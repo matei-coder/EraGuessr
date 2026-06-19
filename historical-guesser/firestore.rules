@@ -1,0 +1,63 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// Collection: players
+// Document ID: slug of the player's display name (e.g. "ana-pop")
+// Fields (ALL required, strict schema — no extra fields allowed):
+//   - name:      string,   1..40 chars   (display name, immutable after create)
+//   - total:     number,   0..100,000,000 (cumulative score, may only INCREASE)
+//   - rounds:    number,   0..1,000,000  (rounds played, +1 per update)
+//   - updatedAt: timestamp               (server time of last write)
+//
+// NOTE: This is an INTENTIONALLY PUBLIC, UNAUTHENTICATED leaderboard for a demo.
+// Anyone can read it and submit a score under any name (there is no sign-in).
+// Writes are tightly validated (strict schema, type checks, size limits, and a
+// per-round score cap of 10,000) to limit abuse, but a determined client could
+// still farm points. Before a real launch, add Firebase Auth + App Check and
+// tie writes to request.auth.uid.
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Max points obtainable in a single round (5000 location + 5000 year).
+    function maxRound() { return 10000; }
+
+    // A document is a structurally valid player entry.
+    function isValidPlayer(d) {
+      return d.keys().hasOnly(['name', 'total', 'rounds', 'updatedAt'])
+        && d.keys().hasAll(['name', 'total', 'rounds', 'updatedAt'])
+        && d.name is string && d.name.size() >= 1 && d.name.size() <= 40
+        && d.total is number && d.total >= 0 && d.total <= 100000000
+        && d.rounds is number && d.rounds >= 0 && d.rounds <= 1000000
+        && d.updatedAt is timestamp;
+    }
+
+    match /players/{playerId} {
+      // Public read: required for the live leaderboard query
+      // (orderBy total desc, limit 10).
+      allow read: if true;
+
+      // First round for a new player.
+      allow create: if isValidPlayer(request.resource.data)
+        && request.resource.data.rounds == 1
+        && request.resource.data.total <= maxRound();
+
+      // Subsequent rounds: score may only grow (bounded by one round's max),
+      // rounds increments by exactly 1, and the name cannot change.
+      allow update: if isValidPlayer(request.resource.data)
+        && request.resource.data.name == resource.data.name
+        && request.resource.data.rounds == resource.data.rounds + 1
+        && request.resource.data.total >= resource.data.total
+        && request.resource.data.total <= resource.data.total + maxRound();
+
+      // Scores are permanent in this demo.
+      allow delete: if false;
+    }
+
+    // Everything else: default deny (no rule grants access).
+  }
+}

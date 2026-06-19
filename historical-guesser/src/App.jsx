@@ -3,7 +3,14 @@ import PanoramaViewer from './components/PanoramaViewer.jsx';
 import GuessMap from './components/GuessMap.jsx';
 import TimelineSlider from './components/TimelineSlider.jsx';
 import ScoreBoard from './components/ScoreBoard.jsx';
+import Leaderboard from './components/Leaderboard.jsx';
+import NameGate from './components/NameGate.jsx';
 import dataset from './data/dataset.json';
+import { computeRoundScore } from './lib/scoring.js';
+import { submitScore, playerId } from './lib/leaderboard.js';
+import { generateSceneImage } from './lib/ai.js';
+
+const NAME_KEY = 'hg_player_name';
 
 function pickRandom(locations, excludeId) {
   const pool = locations.filter((l) => l.id !== excludeId);
@@ -11,13 +18,21 @@ function pickRandom(locations, excludeId) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
+function midYear(location) {
+  const b = location?.yearRange ?? { min: -3000, max: new Date().getFullYear() };
+  return Math.round((b.min + b.max) / 2);
+}
+
 export default function App() {
   const locations = dataset.locations;
 
+  const [name, setName] = useState(() => localStorage.getItem(NAME_KEY) || '');
   const [current, setCurrent] = useState(() => pickRandom(locations));
   const [guess, setGuess] = useState(null);
-  const [guessYear, setGuessYear] = useState(1000);
+  const [guessYear, setGuessYear] = useState(() => midYear(pickRandom(locations)));
   const [submitted, setSubmitted] = useState(false);
+  const [saveState, setSaveState] = useState('idle'); // idle|saving|saved|error
+  const [ai, setAi] = useState({ url: null, loading: false, error: null });
 
   // Year bounds come from the location if provided, else a sensible default.
   const yearBounds = useMemo(
@@ -25,17 +40,52 @@ export default function App() {
     [current]
   );
 
-  function handleSubmit() {
+  function handleName(n) {
+    localStorage.setItem(NAME_KEY, n);
+    setName(n);
+  }
+
+  async function handleSubmit() {
     if (!guess) return;
     setSubmitted(true);
+
+    const { total } = computeRoundScore(guess, guessYear, current);
+    setSaveState('saving');
+    try {
+      await submitScore(name, total);
+      setSaveState('saved');
+    } catch (err) {
+      console.error('Failed to save score:', err);
+      setSaveState('error');
+    }
   }
 
   function handleNext() {
-    setCurrent((prev) => pickRandom(locations, prev?.id));
+    const next = pickRandom(locations, current?.id);
+    setCurrent(next);
     setGuess(null);
-    setGuessYear(1000);
+    setGuessYear(midYear(next));
     setSubmitted(false);
+    setSaveState('idle');
+    setAi({ url: null, loading: false, error: null });
   }
+
+  async function handleGenerate() {
+    setAi((a) => ({ ...a, loading: true, error: null }));
+    try {
+      const url = await generateSceneImage(current);
+      setAi({ url, loading: false, error: null });
+    } catch (err) {
+      console.error('AI generation failed:', err);
+      setAi({
+        url: null,
+        loading: false,
+        error: err?.message || 'Generation failed',
+      });
+    }
+  }
+
+  if (!name) return <NameGate onSubmit={handleName} />;
 
   return (
     <div
@@ -48,7 +98,9 @@ export default function App() {
     >
       {/* Panorama (top-left, spans both rows) */}
       <div style={{ gridRow: '1 / span 2', position: 'relative' }}>
-        <PanoramaViewer src={current?.image} />
+        <PanoramaViewer src={ai.url} />
+
+        {/* Title chip */}
         <div
           style={{
             position: 'absolute',
@@ -60,6 +112,45 @@ export default function App() {
           }}
         >
           Historical Guesser
+        </div>
+
+        {/* Live leaderboard */}
+        <div style={{ position: 'absolute', top: 12, right: 12 }}>
+          <Leaderboard meId={playerId(name)} />
+        </div>
+
+        {/* AI scene generation */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 16,
+            left: 16,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+          }}
+        >
+          <button onClick={handleGenerate} disabled={ai.loading}>
+            {ai.loading
+              ? 'Generating…'
+              : ai.url
+                ? '✨ Regenerate'
+                : '✨ Generate scene with AI'}
+          </button>
+          {ai.error && (
+            <span
+              style={{
+                color: '#ffb4b4',
+                background: 'rgba(0,0,0,0.7)',
+                padding: '0.3rem 0.6rem',
+                borderRadius: 6,
+                fontSize: '0.85rem',
+                maxWidth: 320,
+              }}
+            >
+              {ai.error}
+            </span>
+          )}
         </div>
       </div>
 
@@ -75,6 +166,7 @@ export default function App() {
             guess={guess}
             guessYear={guessYear}
             actual={current}
+            saveState={saveState}
             onNext={handleNext}
           />
         ) : (

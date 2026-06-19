@@ -8,6 +8,15 @@ both the **location** (on a map) and the **year** (on a timeline).
 - **React** (via Vite)
 - **Leaflet** + **react-leaflet** for the guessing map
 - Plain CSS for the panorama viewer (no 3D dependency)
+- **Firebase** — Cloud Firestore (live leaderboard), Firebase AI Logic
+  (AI scene generation), Firebase Hosting
+
+## Firebase
+
+This build is wired to Firebase: a realtime cross-device **leaderboard**
+(Firestore) and **AI-generated panoramas** (Firebase AI Logic / Gemini image
+model). See **[FIREBASE.md](FIREBASE.md)** for setup, prerequisites, and the
+important note about deploying Firestore rules to the shared project database.
 
 ## Getting started
 
