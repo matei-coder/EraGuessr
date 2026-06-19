@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChronoMap - Portalul Istoric 360°</title>
+    <meta name="description" content="ChronoMap este un joc imersiv de tip Time-Travel GeoGuessr. Explorează epoci istorice în 360 de grade și ghicește perioada și locația pe hartă!">
+    
+    <!-- Google Fonts: Outfit & Orbitron for Sci-Fi / Historical fusion -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Leaflet CSS for Interactive Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <!-- Pannellum CSS for 360 Panorama Viewer -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Holographic Background Noise Overlay -->
+    <div class="noise-overlay"></div>
+    <div class="scanlines"></div>
+
+    <!-- STARTSCREEN / TIME PORTAL -->
+    <div id="intro-screen" class="screen active">
+        <div class="portal-container">
+            <div class="time-ring outer"></div>
+            <div class="time-ring middle"></div>
+            <div class="time-ring inner"></div>
+            <div class="portal-core"></div>
+        </div>
+        
+        <div class="intro-content">
+            <div class="logo-area">
+                <span class="badge"><i class="fa-solid fa-hourglass-half"></i> PROIECT EXPERIMENTAL</span>
+                <h1 class="glow-text">CHRONOMAP</h1>
+                <p class="subtitle">Ancoră Temporală & Explorare Geografică 360°</p>
+            </div>
+            
+            <p class="description">
+                Ești pregătit să călătorești prin timp? Vei fi trimis în epoci istorice aleatorii. 
+                Explorează mediul la 360 de grade, analizează arhitectura, îmbrăcămintea și indiciile, 
+                apoi ghicește <strong>Locația pe Hartă</strong> și <strong>Anul Exact</strong>.
+            </p>
+
+            <button id="btn-start-game" class="btn btn-cyber">
+                <span class="btn-text">LANSEAZĂ PORTALUL</span>
+                <span class="btn-glitch"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN GAME HUD & PLAYGROUND -->
+    <div id="game-screen" class="screen">
+        
+        <!-- 360 panorama container (background) -->
+        <div id="panorama-viewer"></div>
+
+        <!-- Cyber HUD Header -->
+        <header class="hud-header glass-panel">
+            <div class="hud-logo">
+                <i class="fa-solid fa-compass-drafting text-cyber-blue animate-spin-slow"></i>
+                <span class="orbitron font-bold tracking-wider">CHRONOMAP</span>
+            </div>
+            <div class="hud-stats">
+                <div class="stat-box">
+                    <span class="stat-label">RUNDA</span>
+                    <span id="hud-round" class="stat-value text-cyber-blue">1/5</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">SCOR TOTAL</span>
+                    <span id="hud-score" class="stat-value text-gold">0</span>
+                </div>
+            </div>
+            <button id="btn-mute" class="hud-icon-btn glass-btn" title="Sunet Pornește/Oprește">
+                <i class="fa-solid fa-volume-high"></i>
+            </button>
+        </header>
+
+        <!-- Compass and Hints (Left side) -->
+        <div class="hud-left glass-panel">
+            <div class="hud-panel-title">
+                <i class="fa-solid fa-microchip"></i> COMPAS TEMPORAL
+            </div>
+            <div class="hint-card">
+                <span class="hint-label"><i class="fa-solid fa-lightbulb text-gold"></i> INDICIU MEDIU</span>
+                <p id="hint-text">Rotește imaginea și analizează stilul clădirilor și vegetația pentru a identifica regiunea geografică.</p>
+            </div>
+            <div class="compass-data">
+                <div class="data-row">
+                    <span class="data-label">Senzor Atmosferic:</span>
+                    <span id="sensor-temp" class="data-value text-cyber-blue">Stabil</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Zgomot de Fond:</span>
+                    <span id="sensor-audio" class="data-value text-green">Activat</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guessing Map (Right side - Collapsible) -->
+        <div id="map-container" class="hud-map-wrapper collapsed">
+            <button id="btn-toggle-map" class="map-toggle-btn glass-btn">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span class="toggle-text">DESCHIDE HARTA</span>
+            </button>
+            <div class="map-panel glass-panel">
+                <div class="map-header">
+                    <span><i class="fa-solid fa-earth-europe"></i> LOCAȚIE ANCORĂ</span>
+                    <span class="map-sub">Pune pin-ul pe locație</span>
+                </div>
+                <div id="guess-map"></div>
+            </div>
+        </div>
+
+        <!-- Controls Panel (Bottom bar) -->
+        <div class="hud-bottom glass-panel">
+            <div class="timeline-wrapper">
+                <div class="timeline-labels">
+                    <span class="year-marker">-3000 î.Hr.</span>
+                    <span class="year-marker">-1000 î.Hr.</span>
+                    <span class="year-marker">0</span>
+                    <span class="year-marker">1000 d.Hr.</span>
+                    <span class="year-marker">1500</span>
+                    <span class="year-marker">1800</span>
+                    <span class="year-marker">1900</span>
+                    <span class="year-marker">2026</span>
+                </div>
+                
+                <div class="slider-container">
+                    <input type="range" id="chrono-slider" min="-3000" max="2026" value="1000" class="cyber-slider">
+                    <div id="slider-glow-thumb" class="slider-glow"></div>
+                </div>
+
+                <div class="timeline-guess-display">
+                    <span class="display-label">ANUL GHICIT:</span>
+                    <span id="chrono-guess-val" class="display-value glow-text-cyan">1000 d.Hr.</span>
+                </div>
+            </div>
+
+            <button id="btn-submit-guess" class="btn btn-lock-anchor">
+                <span class="pulse-ring"></span>
+                <i class="fa-solid fa-anchor"></i> BLOCHEAZĂ COORDONATELE
+            </button>
+        </div>
+    </div>
+
+    <!-- SCREEN RESULT OVERLAY -->
+    <div id="results-overlay" class="overlay glass-overlay">
+        <div class="result-modal glass-panel popup-anim">
+            <div class="result-header">
+                <div id="portal-status" class="status-badge pulse-red">ALINIERE FINALIZATĂ</div>
+                <h2>REZULTATE DEPLASARE</h2>
+            </div>
+
+            <div class="result-grid">
+                <!-- Location Result Map -->
+                <div class="result-map-card">
+                    <h3>Distanța Geografică</h3>
+                    <div id="result-map"></div>
+                    <div class="stat-row">
+                        <span>Eroare Locație:</span>
+                        <span id="val-distance" class="text-cyber-blue font-bold">1200 km</span>
+                    </div>
+                </div>
+
+                <!-- Score Details -->
+                <div class="result-stats-card">
+                    <h3>Analiză Decalaj</h3>
+                    
+                    <div class="timeline-comparison">
+                        <div class="comp-box">
+                            <span class="comp-title">ANUL REAL</span>
+                            <span id="val-real-year" class="comp-val text-gold">1450</span>
+                        </div>
+                        <div class="comp-box">
+                            <span class="comp-title">GHICIT DE TINE</span>
+                            <span id="val-guessed-year" class="comp-val text-cyber-blue">1500</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-row border-top">
+                        <span>Decalaj Temporal:</span>
+                        <span id="val-year-diff" class="text-red font-bold">50 Ani</span>
+                    </div>
+
+                    <div class="score-breakdown">
+                        <div class="score-bar-row">
+                            <span>Scor Locație</span>
+                            <div class="bar-container"><div id="bar-loc" class="bar-fill blue" style="width: 70%"></div></div>
+                            <span id="score-loc" class="score-num text-cyber-blue">3,500</span>
+                        </div>
+                        <div class="score-bar-row">
+                            <span>Scor Temporal</span>
+                            <div class="bar-container"><div id="bar-time" class="bar-fill gold" style="width: 85%"></div></div>
+                            <span id="score-time" class="score-num text-gold">4,250</span>
+                        </div>
+                    </div>
+
+                    <div class="grand-score-box">
+                        <span class="grand-title">SCOR RUNDĂ</span>
+                        <span id="score-total" class="grand-val text-green">7,750 / 10,000</span>
+                    </div>
+
+                    <div class="ai-commentary-box">
+                        <div class="commentary-header">
+                            <i class="fa-solid fa-robot"></i> ELEVENLABS AI COMENTATOR
+                        </div>
+                        <p id="ai-commentary-text">"Interesantă încercare! Ai aterizat la câteva sute de kilometri distanță, dar în aceeași eră. Oricum, mult mai bine decât să sfârșești în burta unui mamut lânos!"</p>
+                        <button id="btn-replay-voice" class="glass-btn small-btn"><i class="fa-solid fa-volume-high"></i> Ascultă Vocea</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-actions">
+                <button id="btn-next-round" class="btn btn-cyber">
+                    <span class="btn-text">URMĂTOAREA SĂRITURĂ <i class="fa-solid fa-arrow-right-long"></i></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div id="game-over-screen" class="screen">
+        <div class="game-over-container glass-panel">
+            <i class="fa-solid fa-circle-check text-green end-icon"></i>
+            <h1 class="orbitron glow-text-green">MISIUNE COMPLETĂ</h1>
+            <p class="subtitle">Ai supraviețuit salturilor în timp!</p>
+
+            <div class="final-score-card">
+                <span class="card-label">SCOR TOTAL MISIUNE</span>
+                <span id="final-score-val" class="card-val text-gold">0</span>
+                <span id="final-rank" class="card-rank text-cyber-blue">Rang: Călător de Grad 2</span>
+            </div>
+
+            <div class="leaderboard-panel">
+                <h3><i class="fa-solid fa-trophy text-gold"></i> LEADERBOARD CHRONO-CONTRACRONOMETRU</h3>
+                <div class="leaderboard-table">
+                    <div class="leader-row header">
+                        <span>Loc</span>
+                        <span>Explorator</span>
+                        <span>Scor</span>
+                    </div>
+                    <div class="leader-row current-user">
+                        <span>#1</span>
+                        <span>Tu (Călătorul Temporal)</span>
+                        <span id="leader-user-score">38,450</span>
+                    </div>
+                    <div class="leader-row">
+                        <span>#2</span>
+                        <span>Elena_1890</span>
+                        <span>36,890</span>
+                    </div>
+                    <div class="leader-row">
+                        <span>#3</span>
+                        <span>MarcusAurelius_Fan</span>
+                        <span>34,120</span>
+                    </div>
+                    <div class="leader-row">
+                        <span>#4</span>
+                        <span>Chronos99</span>
+                        <span>29,400</span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="btn-restart" class="btn btn-cyber restart-btn">
+                <span class="btn-text"><i class="fa-solid fa-rotate-left"></i> REÎNCEPE MISIUNEA</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Pannellum JS -->
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>

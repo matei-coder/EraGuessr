@@ -1,0 +1,1176 @@
+/* ==========================================================================
+   CHRONOMAP - MODERN HIGH-TECH GLASSMORPHISM DESIGN SYSTEM
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens & Root Settings
+   -------------------------------------------------------------------------- */
+:root {
+    --bg-dark: #070a13;
+    --bg-darker: #03050a;
+    --panel-bg: rgba(11, 17, 33, 0.65);
+    --panel-border: rgba(0, 240, 255, 0.15);
+    --panel-border-glow: rgba(0, 240, 255, 0.05);
+    
+    /* Neon Accents */
+    --cyber-blue: #00f0ff;
+    --cyber-blue-glow: rgba(0, 240, 255, 0.4);
+    --gold: #ffb700;
+    --gold-glow: rgba(255, 183, 0, 0.4);
+    --green: #00f59b;
+    --green-glow: rgba(0, 245, 155, 0.3);
+    --red: #ff3860;
+    --red-glow: rgba(255, 56, 96, 0.3);
+
+    /* Fonts */
+    --font-orbitron: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
+    --font-outfit: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-darker);
+    color: #f1f5f9;
+    font-family: var(--font-outfit);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.orbitron {
+    font-family: var(--font-orbitron);
+}
+
+/* --------------------------------------------------------------------------
+   2. Scanlines & Cyber Atmosphere Overlays
+   -------------------------------------------------------------------------- */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 9998;
+    pointer-events: none;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.15) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------------
+   3. Base CSS Framework & Glassmorphism Utilities
+   -------------------------------------------------------------------------- */
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5),
+                inset 0 0 12px var(--panel-border-glow);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.glass-panel:hover {
+    border-color: rgba(0, 240, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(0, 240, 255, 0.05),
+                inset 0 0 16px rgba(0, 240, 255, 0.08);
+}
+
+.glass-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f1f5f9;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-orbitron);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.glass-btn:hover {
+    background: rgba(0, 240, 255, 0.08);
+    border-color: rgba(0, 240, 255, 0.3);
+    color: var(--cyber-blue);
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+}
+
+.glow-text {
+    font-family: var(--font-orbitron);
+    color: #ffffff;
+    text-shadow: 0 0 8px var(--cyber-blue-glow),
+                 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.glow-text-cyan {
+    color: var(--cyber-blue);
+    text-shadow: 0 0 10px var(--cyber-blue-glow);
+}
+
+.glow-text-green {
+    color: var(--green);
+    text-shadow: 0 0 10px var(--green-glow);
+}
+
+/* Screen Transitions */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    z-index: 10;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 20;
+}
+
+/* --------------------------------------------------------------------------
+   4. Screen 1: INTRO TIME PORTAL
+   -------------------------------------------------------------------------- */
+#intro-screen {
+    background: radial-gradient(circle at center, #0f172a 0%, var(--bg-darker) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Rotating Temporal Portal */
+.portal-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.time-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px dashed transparent;
+}
+
+.time-ring.outer {
+    width: 300px;
+    height: 300px;
+    border-top-color: var(--cyber-blue);
+    border-bottom-color: var(--cyber-blue);
+    animation: spin 20s linear infinite;
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+}
+
+.time-ring.middle {
+    width: 230px;
+    height: 230px;
+    border-left-color: var(--gold);
+    border-right-color: var(--gold);
+    animation: spin-reverse 15s linear infinite;
+}
+
+.time-ring.inner {
+    width: 160px;
+    height: 160px;
+    border-top-color: var(--red);
+    border-bottom-color: var(--cyber-blue);
+    animation: spin 8s linear infinite;
+}
+
+.portal-core {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffffff 0%, var(--cyber-blue) 40%, rgba(0,0,0,0) 80%);
+    box-shadow: 0 0 40px var(--cyber-blue), 0 0 80px rgba(0,240,255,0.5);
+    animation: pulse 3s ease-in-out infinite alternate;
+}
+
+.intro-content {
+    max-width: 600px;
+    z-index: 30;
+}
+
+.badge {
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid var(--cyber-blue);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: var(--font-orbitron);
+    color: var(--cyber-blue);
+    letter-spacing: 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.intro-content h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 6px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-family: var(--font-orbitron);
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+}
+
+.intro-content .description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #94a3b8;
+    margin-bottom: 35px;
+}
+
+/* Cybernetic Glitch Button */
+.btn {
+    font-family: var(--font-orbitron);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 16px 40px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-cyber {
+    background: var(--cyber-blue);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.btn-cyber:hover {
+    background: #ffffff;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   5. Screen 2: MAIN GAME HUD & PLAYGROUND
+   -------------------------------------------------------------------------- */
+#panorama-viewer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+/* Pannellum UI Overrides for clean retro integration */
+.pnlm-load-box {
+    background: var(--panel-bg) !important;
+    border: 1px solid var(--panel-border) !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(10px) !important;
+    color: var(--cyber-blue) !important;
+    font-family: var(--font-orbitron) !important;
+}
+
+.pnlm-lmsg {
+    font-family: var(--font-orbitron) !important;
+}
+
+.pnlm-compass {
+    display: none !important; /* We build our own */
+}
+
+/* Cyber HUD Header */
+.hud-header {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 1400px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    z-index: 100;
+}
+
+.hud-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.hud-stats {
+    display: flex;
+    gap: 30px;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    font-family: var(--font-orbitron);
+    letter-spacing: 1.5px;
+    color: #94a3b8;
+    margin-bottom: 2px;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-family: var(--font-orbitron);
+    font-weight: 800;
+}
+
+.text-cyber-blue { color: var(--cyber-blue); }
+.text-gold { color: var(--gold); }
+.text-green { color: var(--green); }
+.text-red { color: var(--red); }
+
+/* Left Sidebar / Compass */
+.hud-left {
+    position: absolute;
+    top: 110px;
+    left: 2.5%;
+    width: 280px;
+    padding: 20px;
+    z-index: 100;
+}
+
+.hud-panel-title {
+    font-family: var(--font-orbitron);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #fff;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hint-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.hint-label {
+    font-family: var(--font-orbitron);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.hint-card p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #94a3b8;
+}
+
+.compass-data {
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.data-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.data-label {
+    color: #64748b;
+}
+
+.data-value {
+    font-family: var(--font-orbitron);
+    font-weight: 600;
+}
+
+/* Collapsible Map Wrapper */
+.hud-map-wrapper {
+    position: absolute;
+    top: 110px;
+    right: 2.5%;
+    z-index: 100;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.hud-map-wrapper.collapsed {
+    width: 50px;
+    height: 50px;
+}
+
+.hud-map-wrapper.collapsed .map-panel {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9);
+}
+
+.map-toggle-btn {
+    height: 50px;
+    width: auto;
+    min-width: 50px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.map-toggle-btn i {
+    font-size: 1.2rem;
+}
+
+.toggle-text {
+    max-width: 0;
+    opacity: 0;
+    transition: max-width 0.3s ease, opacity 0.2s ease, margin-left 0.2s ease;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.map-toggle-btn:hover .toggle-text {
+    max-width: 150px;
+    opacity: 1;
+    margin-left: 10px;
+}
+
+.map-panel {
+    width: 380px;
+    height: 380px;
+    margin-top: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    transform-origin: top right;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-orbitron);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+}
+
+.map-sub {
+    font-size: 0.65rem;
+    color: var(--gold);
+}
+
+#guess-map {
+    flex-grow: 1;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #0b0f19;
+}
+
+/* Customizing Leaflet styles to fit Dark Theme */
+.leaflet-container {
+    background: #070a13 !important;
+}
+
+.leaflet-bar a {
+    background-color: var(--panel-bg) !important;
+    border: 1px solid var(--panel-border) !important;
+    color: #fff !important;
+}
+
+.leaflet-bar a:hover {
+    background-color: rgba(0, 240, 255, 0.15) !important;
+    color: var(--cyber-blue) !important;
+}
+
+/* Bottom Control Bar */
+.hud-bottom {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 1400px;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    z-index: 100;
+}
+
+.timeline-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.timeline-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-orbitron);
+    font-size: 0.65rem;
+    color: #64748b;
+    padding: 0 5px;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+}
+
+.cyber-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.cyber-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--cyber-blue);
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px var(--cyber-blue), 0 0 20px var(--cyber-blue);
+    transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+.cyber-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: #ffffff;
+}
+
+.timeline-guess-display {
+    font-family: var(--font-orbitron);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.display-label {
+    color: #64748b;
+    letter-spacing: 1px;
+}
+
+.display-value {
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.btn-lock-anchor {
+    background: linear-gradient(135deg, var(--gold) 0%, #ff8000 100%);
+    color: #000;
+    box-shadow: 0 0 20px rgba(255, 183, 0, 0.3);
+    padding: 18px 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.btn-lock-anchor:hover {
+    background: #ffffff;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    animation: anchor-pulse 2s infinite;
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   6. RESULTS OVERLAY & AI SPEECH COMMENTARY
+   -------------------------------------------------------------------------- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(3, 5, 10, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.overlay.active {
+    display: flex;
+}
+
+.result-modal {
+    width: 100%;
+    max-width: 950px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+.result-header h2 {
+    font-family: var(--font-orbitron);
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 1.6rem;
+    color: #fff;
+}
+
+.status-badge {
+    font-family: var(--font-orbitron);
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.pulse-red {
+    border: 1px solid var(--red);
+    background: rgba(255, 56, 96, 0.1);
+    color: var(--red);
+    box-shadow: 0 0 10px rgba(255, 56, 96, 0.1);
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.3fr;
+    gap: 25px;
+}
+
+.result-map-card, .result-stats-card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.result-map-card h3, .result-stats-card h3 {
+    font-family: var(--font-orbitron);
+    font-size: 0.9rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+#result-map {
+    width: 100%;
+    height: 250px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    padding: 5px 0;
+}
+
+.stat-row.border-top {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+    margin-top: 5px;
+}
+
+.border-top {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Timeline Comparison */
+.timeline-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.comp-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.comp-title {
+    font-family: var(--font-orbitron);
+    font-size: 0.65rem;
+    color: #64748b;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.comp-val {
+    font-family: var(--font-orbitron);
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+/* Score bars styling */
+.score-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.score-bar-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 60px;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.bar-container {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s cubic-bezier(0.1, 1, 0.1, 1);
+}
+
+.bar-fill.blue { background: var(--cyber-blue); box-shadow: 0 0 8px var(--cyber-blue-glow); }
+.bar-fill.gold { background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
+
+.score-num {
+    font-family: var(--font-orbitron);
+    font-weight: bold;
+    text-align: right;
+}
+
+/* Grand Score display */
+.grand-score-box {
+    background: rgba(0, 245, 155, 0.04);
+    border: 1px solid rgba(0, 245, 155, 0.15);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: inset 0 0 12px rgba(0, 245, 155, 0.02);
+}
+
+.grand-title {
+    font-family: var(--font-orbitron);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    color: #94a3b8;
+    margin-bottom: 2px;
+    display: block;
+}
+
+.grand-val {
+    font-family: var(--font-orbitron);
+    font-size: 1.8rem;
+    font-weight: 900;
+    text-shadow: 0 0 10px var(--green-glow);
+}
+
+/* AI Voice Commentary */
+.ai-commentary-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px 15px;
+}
+
+.commentary-header {
+    font-family: var(--font-orbitron);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--cyber-blue);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ai-commentary-box p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #e2e8f0;
+    font-style: italic;
+    margin-bottom: 8px;
+}
+
+.small-btn {
+    padding: 4px 10px;
+    font-size: 0.65rem;
+    border-radius: 4px;
+}
+
+.result-actions {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+}
+
+/* --------------------------------------------------------------------------
+   7. GAME OVER MISSION COMPLETE SCREEN
+   -------------------------------------------------------------------------- */
+#game-over-screen {
+    background: radial-gradient(circle at center, #070d1a 0%, var(--bg-darker) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.game-over-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.end-icon {
+    font-size: 3.5rem;
+    margin-bottom: 5px;
+    animation: pulse 2s infinite alternate;
+}
+
+#game-over-screen h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+}
+
+.final-score-card {
+    background: rgba(255, 183, 0, 0.03);
+    border: 1px solid rgba(255, 183, 0, 0.15);
+    border-radius: 12px;
+    padding: 25px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-label {
+    font-family: var(--font-orbitron);
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    color: #94a3b8;
+    margin-bottom: 5px;
+}
+
+.card-val {
+    font-family: var(--font-orbitron);
+    font-size: 3rem;
+    font-weight: 900;
+    text-shadow: 0 0 15px var(--gold-glow);
+    margin-bottom: 5px;
+}
+
+.card-rank {
+    font-family: var(--font-orbitron);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Leaderboard */
+.leaderboard-panel {
+    width: 100%;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.leaderboard-panel h3 {
+    font-family: var(--font-orbitron);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: #fff;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.leaderboard-table {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.leader-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    border-radius: 4px;
+    color: #94a3b8;
+}
+
+.leader-row.header {
+    font-family: var(--font-orbitron);
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #64748b;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-transform: uppercase;
+}
+
+.leader-row.current-user {
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    color: #fff;
+    font-weight: bold;
+}
+
+.restart-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   8. ANIMATIONS & REUSABLE EFFECTS
+   -------------------------------------------------------------------------- */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.9; }
+    100% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes anchor-pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.06); opacity: 0; }
+}
+
+/* Pop up animation for result modal */
+.popup-anim {
+    animation: popup 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes popup {
+    0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Spin animation slow */
+.animate-spin-slow {
+    animation: spin 8s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   9. MEDIA QUERIES FOR MOBILE COMPATIBILITY
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+    #result-map {
+        height: 180px;
+    }
+    .hud-bottom {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    .btn-lock-anchor {
+        width: 100%;
+        justify-content: center;
+    }
+    .hud-left {
+        display: none; /* Hide complex compass on small screens */
+    }
+    .map-panel {
+        width: 320px;
+        height: 320px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   10. CUSTOM MAP HOLOGRAPHIC PINS (CYBER PINS)
+   -------------------------------------------------------------------------- */
+.cyber-pin, .cyber-pin-real, .cyber-pin-guess {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* User's placement pin */
+.pin-core {
+    width: 12px;
+    height: 12px;
+    background-color: var(--cyber-blue);
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px var(--cyber-blue);
+}
+.pin-ring {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--cyber-blue);
+    border-radius: 50%;
+    animation: pin-pulse 1.5s infinite;
+}
+
+/* Real location pin (Gold) */
+.pin-core-real {
+    width: 12px;
+    height: 12px;
+    background-color: var(--gold);
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px var(--gold);
+}
+.pin-ring-real {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    animation: pin-pulse 1.5s infinite;
+}
+
+/* Guessed location pin (Cyan) */
+.pin-core-guess {
+    width: 12px;
+    height: 12px;
+    background-color: var(--cyber-blue);
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px var(--cyber-blue);
+}
+.pin-ring-guess {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--cyber-blue);
+    border-radius: 50%;
+    animation: pin-pulse 1.5s infinite;
+}
+
+@keyframes pin-pulse {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
