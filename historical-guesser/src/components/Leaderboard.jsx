@@ -15,60 +15,25 @@ export default function Leaderboard({ meId }) {
   useEffect(() => subscribeLeaderboard(setRows), []);
 
   return (
-    <div
-      style={{
-        width: 240,
-        background: 'rgba(0,0,0,0.65)',
-        backdropFilter: 'blur(4px)',
-        borderRadius: 10,
-        padding: '0.75rem 0.9rem',
-        boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
-        fontSize: '0.9rem',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '0.5rem',
-        }}
-      >
+    <div className="lb">
+      <div className="lb-head">
         <strong>🏆 Leaderboard</strong>
-        <span style={{ fontSize: '0.7rem', opacity: 0.6 }}>live</span>
+        <span className="live">live</span>
       </div>
 
       {rows.length === 0 ? (
-        <div style={{ opacity: 0.6, fontSize: '0.8rem' }}>
-          No scores yet — be the first!
-        </div>
+        <div className="lb-empty">No scores yet — be the first!</div>
       ) : (
-        <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        <ol className="lb-list">
           {rows.map((p, i) => {
             const isMe = meId && p.id === meId;
             return (
-              <li
-                key={p.id}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  gap: 8,
-                  padding: '0.2rem 0.4rem',
-                  borderRadius: 6,
-                  background: isMe ? 'rgba(45,108,223,0.45)' : 'transparent',
-                  fontWeight: isMe ? 700 : 400,
-                }}
-              >
-                <span
-                  style={{
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {i + 1}. {p.name}
+              <li key={p.id} className={`lb-row${isMe ? ' me' : ''}`}>
+                <span className="lb-name">
+                  <span className="lb-rank">{i + 1}.</span>
+                  {p.name}
                 </span>
-                <span style={{ opacity: 0.9 }}>
+                <span className="lb-score">
                   {Number(p.total || 0).toLocaleString()}
                 </span>
               </li>

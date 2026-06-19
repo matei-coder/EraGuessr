@@ -51,3 +51,13 @@ export function computeRoundScore(guess, guessYear, actual) {
     total: distanceScore + yearScore,
   };
 }
+
+/**
+ * Average of per-level totals, rounded. Returns 0 for an empty list.
+ * Each level is capped at 10,000, so the average is also on a 0–10,000 scale.
+ * @param {number[]} scores
+ */
+export function averageScore(scores) {
+  if (!scores || !scores.length) return 0;
+  return Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+}

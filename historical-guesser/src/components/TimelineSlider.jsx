@@ -19,21 +19,14 @@ export default function TimelineSlider({
   const label = formatYear(value);
 
   return (
-    <div style={{ padding: '0.75rem 1rem' }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: '0.4rem',
-          fontSize: '0.85rem',
-          opacity: 0.8,
-        }}
-      >
+    <div className="timeline">
+      <div className="timeline-head">
         <span>{formatYear(min)}</span>
-        <strong style={{ fontSize: '1.1rem', opacity: 1 }}>{label}</strong>
+        <span className="timeline-year">{label}</span>
         <span>{formatYear(max)}</span>
       </div>
       <input
+        className="slider"
         type="range"
         min={min}
         max={max}
@@ -41,13 +34,12 @@ export default function TimelineSlider({
         value={value}
         disabled={disabled}
         onChange={(e) => onChange(Number(e.target.value))}
-        style={{ width: '100%' }}
       />
     </div>
   );
 }
 
 function formatYear(year) {
-  if (year < 0) return `${Math.abs(year)} BCE`;
-  return `${year} CE`;
+  if (year < 0) return `${Math.abs(year)} î.Hr.`;
+  return `${year}`;
 }

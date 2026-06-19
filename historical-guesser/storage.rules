@@ -1,0 +1,31 @@
+rules_version = '2';
+
+// ===============================================================
+// EraGuessr — Firebase Storage rules
+// ===============================================================
+//
+// Generated historical scene images live under:  scenes/{locationId}.{ext}
+//
+// Reads are public so the game can render the panorama on any device. Uploads
+// happen ONLY server-side via the Admin SDK (the backend generates the image,
+// stores it, then writes the images/{id} metadata doc in Firestore). The Admin
+// SDK bypasses these rules, so client writes are denied.
+//
+// PROTOTYPE: tighten before a public launch (add App Check at minimum).
+// ===============================================================
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Cached AI scenes — public read, server-only write.
+    match /scenes/{imageFile} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Everything else: default deny.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

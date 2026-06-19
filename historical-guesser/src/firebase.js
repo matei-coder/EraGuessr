@@ -9,6 +9,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAexHcWftUo3wBsIM7_JjvYpfPP1pU_zj0',
@@ -23,6 +24,9 @@ export const app = initializeApp(firebaseConfig);
 
 // Cloud Firestore — used for the realtime leaderboard.
 export const db = getFirestore(app);
+
+// Firebase Authentication — Google + email/password sign-in (see src/lib/auth.js).
+export const auth = getAuth(app);
 
 // NOTE: image generation does NOT go through Firebase AI Logic — it calls the
 // Gemini API directly with a key (see src/lib/ai.js).

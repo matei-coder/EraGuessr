@@ -1,44 +1,72 @@
 rules_version = '2';
 
 // ===============================================================
-// Assumed Data Model
+// EraGuessr — Firestore data model
 // ===============================================================
 //
-// Collection: players
-// Document ID: slug of the player's display name (e.g. "ana-pop")
-// Fields (ALL required, strict schema — no extra fields allowed):
-//   - name:      string,   1..40 chars   (display name, immutable after create)
-//   - total:     number,   0..100,000,000 (cumulative score, may only INCREASE)
-//   - rounds:    number,   0..1,000,000  (rounds played, +1 per update)
-//   - updatedAt: timestamp               (server time of last write)
+// This is an INTENTIONALLY PUBLIC, UNAUTHENTICATED demo (no sign-in). Reads are
+// open so any phone that scans the QR can play and watch the live leaderboard.
+// Writes are tightly validated (strict schemas, type/size checks, score caps).
+// Catalog data (locations, images) is written ONLY server-side via the Admin
+// SDK (Cloud Functions / seed script), which bypasses these rules — so client
+// writes to those collections are denied outright.
 //
-// NOTE: This is an INTENTIONALLY PUBLIC, UNAUTHENTICATED leaderboard for a demo.
-// Anyone can read it and submit a score under any name (there is no sign-in).
-// Writes are tightly validated (strict schema, type checks, size limits, and a
-// per-round score cap of 10,000) to limit abuse, but a determined client could
-// still farm points. Before a real launch, add Firebase Auth + App Check and
-// tie writes to request.auth.uid.
+// Before a real launch: add Firebase Auth + App Check and tie player writes to
+// request.auth.uid. These rules are a reviewed PROTOTYPE, not production-grade.
+//
+// ---------------------------------------------------------------
+// Collection: players/{slug}              -- the "users" model
+//   Doc ID: slug of display name (e.g. "ana-pop")
+//   - name:      string,    1..40 chars      (immutable after create)
+//   - total:     number,    0..100,000,000   (cumulative score, only INCREASES)
+//   - rounds:    number,    0..1,000,000     (+1 per round)
+//   - bestRound: number,    0..10,000        (optional, best single round)
+//   - updatedAt: timestamp                   (server time of last write)
+//
+// Collection: locations/{locationId}      -- the round catalog
+//   Doc ID: stable slug (e.g. "loc-001")
+//   - title:       string,  1..120
+//   - lat:         number,  -90..90
+//   - lng:         number,  -180..180
+//   - year:        number,  -5000..2100      (true year of the scene)
+//   - yearRange:   map { min:number, max:number }  (slider bounds)
+//   - description: string,  0..500   (optional, used in the image prompt)
+//   - credit:      string,  0..200   (optional, attribution)
+//   - imageId:     string,  0..120   (optional, ref images/{imageId})
+//   - active:      bool                       (in the rotation?)
+//   - createdAt:   timestamp
+//
+// Collection: images/{imageId}            -- cached AI scene metadata
+//   Doc ID: same as the location it belongs to (one canonical image / location)
+//   - locationId:  string,  1..120          (ref locations/{locationId})
+//   - storagePath: string,  1..300          (path in Firebase Storage)
+//   - url:         string,  1..2000         (public download URL)
+//   - prompt:      string,  0..2000         (prompt sent to the model)
+//   - model:       string,  0..80           (e.g. "gemini-2.5-flash-image")
+//   - status:      string   in {pending,ready,failed}
+//   - createdAt:   timestamp
 // ===============================================================
 
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Max points obtainable in a single round (5000 location + 5000 year).
+    // ----- Helpers ------------------------------------------------
+    // Max points obtainable in one round (5000 location + 5000 year).
     function maxRound() { return 10000; }
 
-    // A document is a structurally valid player entry.
     function isValidPlayer(d) {
-      return d.keys().hasOnly(['name', 'total', 'rounds', 'updatedAt'])
-        && d.keys().hasAll(['name', 'total', 'rounds', 'updatedAt'])
+      return d.keys().hasAll(['name', 'total', 'rounds', 'updatedAt'])
+        && d.keys().hasOnly(['name', 'total', 'rounds', 'bestRound', 'updatedAt'])
         && d.name is string && d.name.size() >= 1 && d.name.size() <= 40
         && d.total is number && d.total >= 0 && d.total <= 100000000
         && d.rounds is number && d.rounds >= 0 && d.rounds <= 1000000
+        && (!('bestRound' in d) || (d.bestRound is number && d.bestRound >= 0 && d.bestRound <= maxRound()))
         && d.updatedAt is timestamp;
     }
 
+    // ----- players (users + leaderboard) --------------------------
     match /players/{playerId} {
-      // Public read: required for the live leaderboard query
-      // (orderBy total desc, limit 10).
+      // Public read powers the live leaderboard (orderBy total desc, limit N).
       allow read: if true;
 
       // First round for a new player.
@@ -46,18 +74,50 @@ service cloud.firestore {
         && request.resource.data.rounds == 1
         && request.resource.data.total <= maxRound();
 
-      // Subsequent rounds: score may only grow (bounded by one round's max),
-      // rounds increments by exactly 1, and the name cannot change.
+      // Later rounds: score only grows (<= one round's max), rounds += 1,
+      // name is immutable.
       allow update: if isValidPlayer(request.resource.data)
         && request.resource.data.name == resource.data.name
         && request.resource.data.rounds == resource.data.rounds + 1
         && request.resource.data.total >= resource.data.total
         && request.resource.data.total <= resource.data.total + maxRound();
 
-      // Scores are permanent in this demo.
       allow delete: if false;
     }
 
-    // Everything else: default deny (no rule grants access).
+    // ----- locations (round catalog) ------------------------------
+    // Read-only for the client; the game needs the catalog to render rounds.
+    // Writes happen server-side (Admin SDK) only, so deny all client writes.
+    match /locations/{locationId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ----- images (cached AI scene metadata) ----------------------
+    // Read-only for the client; generation + caching is a backend job that
+    // writes via the Admin SDK. Deny all client writes.
+    match /images/{imageId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ----- matches (Kahoot-style multiplayer lobbies) -------------
+    // A match is a short-lived lobby + game keyed by a join CODE. Reads are
+    // open (anyone with the code can watch). Writes require sign-in; this is a
+    // demo posture (no per-field schema enforcement). The `players` subcollection
+    // holds one doc per participant, keyed by their auth uid.
+    match /matches/{code} {
+      allow read: if true;
+      allow create, update: if request.auth != null;
+      allow delete: if false;
+
+      match /players/{uid} {
+        allow read: if true;
+        // A player may only write their own player doc.
+        allow write: if request.auth != null && request.auth.uid == uid;
+      }
+    }
+
+    // Everything else: default deny.
   }
 }

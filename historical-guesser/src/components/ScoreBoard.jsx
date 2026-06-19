@@ -10,40 +10,84 @@ import { computeRoundScore } from '../lib/scoring.js';
  *   - guess:  { lat, lng } | null
  *   - guessYear: number
  *   - actual: { lat, lng, year, title } -> the location's truth
- *   - saveState: 'idle' | 'saving' | 'saved' | 'error'
+ *   - fact: { text, loading, error } -> AI blurb about the correct location
+ *   - level: number      0-based index of the current level
+ *   - levelCount: number total levels in a game
  *   - onNext: () => void
  */
-export default function ScoreBoard({ guess, guessYear, actual, saveState, onNext }) {
+export default function ScoreBoard({
+  guess,
+  guessYear,
+  actual,
+  fact,
+  level = 0,
+  levelCount = 1,
+  onNext,
+}) {
   if (!actual) return null;
 
   const { distanceKm, distanceScore, yearDelta, yearScore, total } =
     computeRoundScore(guess, guessYear, actual);
 
+  const isLast = level >= levelCount - 1;
+
   return (
-    <div style={{ padding: '1rem', lineHeight: 1.6 }}>
-      <h2 style={{ marginTop: 0 }}>Round Result</h2>
-      <p>
-        <strong>{actual.title}</strong>
+    <div className="result">
+      <h2>
+        Runda {level + 1} / {levelCount} · Rezultate
+      </h2>
+
+      <div className="round-score">
+        <div className="rs-label">Scor rundă</div>
+        <div className="rs-value">+{total.toLocaleString()}</div>
+      </div>
+
+      <p className="result-title">
+        <span className="pin">📍</span>
+        {actual.title}
       </p>
-      <p>
-        Distance:{' '}
-        {distanceKm == null ? 'no guess placed' : `${distanceKm.toFixed(1)} km`}{' '}
-        — {distanceScore.toLocaleString()} pts
-      </p>
-      <p>
-        Year off by: {yearDelta} years (you: {guessYear}, actual: {actual.year})
-        — {yearScore.toLocaleString()} pts
-      </p>
-      <p style={{ fontSize: '1.3rem' }}>
-        <strong>Total: {total.toLocaleString()} / 10,000</strong>
-      </p>
-      <p style={{ fontSize: '0.85rem', opacity: 0.8, minHeight: '1.2em' }}>
-        {saveState === 'saving' && '⏳ Saving to leaderboard…'}
-        {saveState === 'saved' && '✅ Added to the live leaderboard'}
-        {saveState === 'error' &&
-          '⚠️ Could not save score (check Firestore rules / connection)'}
-      </p>
-      <button onClick={onNext}>Next location →</button>
+
+      {/* AI roast about the guess */}
+      {fact && (fact.loading || fact.text || fact.error) && (
+        <p
+          className={`roast${fact.error ? ' is-error' : ''}${
+            fact.loading ? ' is-loading' : ''
+          }`}
+        >
+          {fact.loading
+            ? '😏 Îți cântărim alegerea…'
+            : fact.error
+              ? `Nu am putut încărca un comentariu (${fact.error})`
+              : fact.text}
+        </p>
+      )}
+
+      <div className="stats">
+        <div className="stat">
+          <div>
+            <div className="stat-label">Distanță</div>
+            <div className="stat-detail">
+              {distanceKm == null
+                ? 'fără ghicire'
+                : `${distanceKm.toFixed(1)} km distanță`}
+            </div>
+          </div>
+          <div className="stat-pts">+{distanceScore.toLocaleString()}</div>
+        </div>
+        <div className="stat">
+          <div>
+            <div className="stat-label">An</div>
+            <div className="stat-detail">
+              {yearDelta} ani diferență (tu {guessYear} · corect {actual.year})
+            </div>
+          </div>
+          <div className="stat-pts">+{yearScore.toLocaleString()}</div>
+        </div>
+      </div>
+
+      <button className="btn btn-primary btn-block btn-lg" onClick={onNext}>
+        {isLast ? 'Vezi rezultatul final →' : 'Runda Următoare →'}
+      </button>
     </div>
   );
 }

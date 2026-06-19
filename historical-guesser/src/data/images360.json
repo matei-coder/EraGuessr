@@ -1,0 +1,695 @@
+[
+  {
+    "id": "construction-of-the-great-pyramid-of-giza",
+    "title": "Construction of the Great Pyramid of Giza",
+    "year": -2560,
+    "lat": 29.9792,
+    "lng": 31.1342,
+    "slug": "construction-of-the-great-pyramid-of-giza",
+    "image": "/all_360_images/-2560_29.9792_31.1342_construction-of-the-great-pyramid-of-giza.jpg"
+  },
+  {
+    "id": "founding-of-carthage",
+    "title": "Founding of Carthage",
+    "year": -814,
+    "lat": 36.8529,
+    "lng": 10.3341,
+    "slug": "founding-of-carthage",
+    "image": "/all_360_images/-814_36.8529_10.3341_founding-of-carthage.jpg"
+  },
+  {
+    "id": "founding-of-rome",
+    "title": "Founding of Rome",
+    "year": -753,
+    "lat": 41.8902,
+    "lng": 12.4845,
+    "slug": "founding-of-rome",
+    "image": "/all_360_images/-753_41.8902_12.4845_founding-of-rome.jpg"
+  },
+  {
+    "id": "buddha-s-enlightenment",
+    "title": "Buddha's Enlightenment",
+    "year": -528,
+    "lat": 24.6957,
+    "lng": 84.9912,
+    "slug": "buddha-s-enlightenment",
+    "image": "/all_360_images/-528_24.6957_84.9912_buddha-s-enlightenment.jpg"
+  },
+  {
+    "id": "battle-of-thermopylae",
+    "title": "Battle of Thermopylae",
+    "year": -480,
+    "lat": 38.7997,
+    "lng": 22.5627,
+    "slug": "battle-of-thermopylae",
+    "image": "/all_360_images/-480_38.7997_22.5627_battle-of-thermopylae.jpg"
+  },
+  {
+    "id": "qin-dynasty-great-wall-construction",
+    "title": "Qin Dynasty Great Wall Construction",
+    "year": -221,
+    "lat": 40.3573,
+    "lng": 115.9919,
+    "slug": "qin-dynasty-great-wall-construction",
+    "image": "/all_360_images/-221_40.3573_115.9919_qin-dynasty-great-wall-construction.jpg"
+  },
+  {
+    "id": "burning-of-the-library-of-alexandria",
+    "title": "Burning of the Library of Alexandria",
+    "year": -48,
+    "lat": 31.1945,
+    "lng": 29.8973,
+    "slug": "burning-of-the-library-of-alexandria",
+    "image": "/all_360_images/-48_31.1945_29.8973_burning-of-the-library-of-alexandria.jpg"
+  },
+  {
+    "id": "battle-of-actium",
+    "title": "Battle of Actium",
+    "year": -31,
+    "lat": 38.9325,
+    "lng": 20.7325,
+    "slug": "battle-of-actium",
+    "image": "/all_360_images/-31_38.9325_20.7325_battle-of-actium.jpg"
+  },
+  {
+    "id": "assassination-of-cleopatra-vii-and-mark-antony",
+    "title": "Assassination of Cleopatra Vii and Mark Antony",
+    "year": -30,
+    "lat": 31.2001,
+    "lng": 29.9187,
+    "slug": "assassination-of-cleopatra-vii-and-mark-antony",
+    "image": "/all_360_images/-30_31.2001_29.9187_assassination-of-cleopatra-vii-and-mark-antony.jpg"
+  },
+  {
+    "id": "crucifixion-of-jesus-christ",
+    "title": "Crucifixion of Jesus Christ",
+    "year": 33,
+    "lat": 31.782,
+    "lng": 35.228,
+    "slug": "crucifixion-of-jesus-christ",
+    "image": "/all_360_images/33_31.7820_35.2280_crucifixion-of-jesus-christ.jpg"
+  },
+  {
+    "id": "eruption-of-mount-vesuvius",
+    "title": "Eruption of Mount Vesuvius",
+    "year": 79,
+    "lat": 40.7517,
+    "lng": 14.4983,
+    "slug": "eruption-of-mount-vesuvius",
+    "image": "/all_360_images/79_40.7517_14.4983_eruption-of-mount-vesuvius.jpg"
+  },
+  {
+    "id": "founding-of-teotihuacan",
+    "title": "Founding of Teotihuacan",
+    "year": 100,
+    "lat": 19.692,
+    "lng": -98.8436,
+    "slug": "founding-of-teotihuacan",
+    "image": "/all_360_images/100_19.6920_-98.8436_founding-of-teotihuacan.jpg"
+  },
+  {
+    "id": "fall-of-the-western-roman-empire",
+    "title": "Fall of the Western Roman Empire",
+    "year": 476,
+    "lat": 44.4206,
+    "lng": 12.1963,
+    "slug": "fall-of-the-western-roman-empire",
+    "image": "/all_360_images/476_44.4206_12.1963_fall-of-the-western-roman-empire.jpg"
+  },
+  {
+    "id": "hagia-sophia-consecration",
+    "title": "Hagia Sophia Consecration",
+    "year": 537,
+    "lat": 41.0086,
+    "lng": 28.9801,
+    "slug": "hagia-sophia-consecration",
+    "image": "/all_360_images/537_41.0086_28.9801_hagia-sophia-consecration.jpg"
+  },
+  {
+    "id": "battle-of-tours",
+    "title": "Battle of Tours",
+    "year": 732,
+    "lat": 46.7766,
+    "lng": 0.4072,
+    "slug": "battle-of-tours",
+    "image": "/all_360_images/732_46.7766_0.4072_battle-of-tours.jpg"
+  },
+  {
+    "id": "founding-of-baghdad",
+    "title": "Founding of Baghdad",
+    "year": 762,
+    "lat": 33.3364,
+    "lng": 44.3626,
+    "slug": "founding-of-baghdad",
+    "image": "/all_360_images/762_33.3364_44.3626_founding-of-baghdad.jpg"
+  },
+  {
+    "id": "coronation-of-charlemagne",
+    "title": "Coronation of Charlemagne",
+    "year": 800,
+    "lat": 41.9022,
+    "lng": 12.4533,
+    "slug": "coronation-of-charlemagne",
+    "image": "/all_360_images/800_41.9022_12.4533_coronation-of-charlemagne.jpg"
+  },
+  {
+    "id": "battle-of-hastings",
+    "title": "Battle of Hastings",
+    "year": 1066,
+    "lat": 50.9142,
+    "lng": 0.4856,
+    "slug": "battle-of-hastings",
+    "image": "/all_360_images/1066_50.9142_0.4856_battle-of-hastings.jpg"
+  },
+  {
+    "id": "crowning-of-william-the-conqueror",
+    "title": "Crowning of William the Conqueror",
+    "year": 1066,
+    "lat": 51.4994,
+    "lng": -0.1272,
+    "slug": "crowning-of-william-the-conqueror",
+    "image": "/all_360_images/1066_51.4994_-0.1272_crowning-of-william-the-conqueror.jpg"
+  },
+  {
+    "id": "first-crusade-preaching",
+    "title": "First Crusade Preaching",
+    "year": 1095,
+    "lat": 45.7766,
+    "lng": 3.0874,
+    "slug": "first-crusade-preaching",
+    "image": "/all_360_images/1095_45.7766_3.0874_first-crusade-preaching.jpg"
+  },
+  {
+    "id": "signing-of-magna-carta",
+    "title": "Signing of Magna Carta",
+    "year": 1215,
+    "lat": 51.4422,
+    "lng": -0.5694,
+    "slug": "signing-of-magna-carta",
+    "image": "/all_360_images/1215_51.4422_-0.5694_signing-of-magna-carta.jpg"
+  },
+  {
+    "id": "genghis-khan-s-death",
+    "title": "Genghis Khan's Death",
+    "year": 1227,
+    "lat": 38.4682,
+    "lng": 106.2731,
+    "slug": "genghis-khan-s-death",
+    "image": "/all_360_images/1227_38.4682_106.2731_genghis-khan-s-death.jpg"
+  },
+  {
+    "id": "sundiata-keita-s-coronation-founding-of-mali-empire",
+    "title": "Sundiata Keita's Coronation Founding of Mali Empire",
+    "year": 1235,
+    "lat": 11.2,
+    "lng": -9.61,
+    "slug": "sundiata-keita-s-coronation-founding-of-mali-empire",
+    "image": "/all_360_images/1235_11.2000_-9.6100_sundiata-keita-s-coronation-founding-of-mali-empire.jpg"
+  },
+  {
+    "id": "marco-polo-s-arrival-in-xanadu",
+    "title": "Marco Polo's Arrival in Xanadu",
+    "year": 1275,
+    "lat": 42.355,
+    "lng": 116.175,
+    "slug": "marco-polo-s-arrival-in-xanadu",
+    "image": "/all_360_images/1275_42.3550_116.1750_marco-polo-s-arrival-in-xanadu.jpg"
+  },
+  {
+    "id": "black-death-in-florence",
+    "title": "Black Death in Florence",
+    "year": 1348,
+    "lat": 43.7695,
+    "lng": 11.2558,
+    "slug": "black-death-in-florence",
+    "image": "/all_360_images/1348_43.7695_11.2558_black-death-in-florence.jpg"
+  },
+  {
+    "id": "joan-of-arc-s-trial-and-execution",
+    "title": "Joan of Arc's Trial and Execution",
+    "year": 1431,
+    "lat": 49.4429,
+    "lng": 1.0911,
+    "slug": "joan-of-arc-s-trial-and-execution",
+    "image": "/all_360_images/1431_49.4429_1.0911_joan-of-arc-s-trial-and-execution.jpg"
+  },
+  {
+    "id": "gutenberg-s-printing-press",
+    "title": "Gutenberg's Printing Press",
+    "year": 1450,
+    "lat": 50.0007,
+    "lng": 8.2713,
+    "slug": "gutenberg-s-printing-press",
+    "image": "/all_360_images/1450_50.0007_8.2713_gutenberg-s-printing-press.jpg"
+  },
+  {
+    "id": "fall-of-constantinople",
+    "title": "Fall of Constantinople",
+    "year": 1453,
+    "lat": 41.018,
+    "lng": 28.932,
+    "slug": "fall-of-constantinople",
+    "image": "/all_360_images/1453_41.0180_28.9320_fall-of-constantinople.jpg"
+  },
+  {
+    "id": "siege-of-constantinople",
+    "title": "Siege of Constantinople",
+    "year": 1453,
+    "lat": 41.02,
+    "lng": 28.9325,
+    "slug": "siege-of-constantinople",
+    "image": "/all_360_images/1453_41.0200_28.9325_siege-of-constantinople.jpg"
+  },
+  {
+    "id": "columbus-first-landing",
+    "title": "Columbus First Landing",
+    "year": 1492,
+    "lat": 24.0625,
+    "lng": -74.4795,
+    "slug": "columbus-first-landing",
+    "image": "/all_360_images/1492_24.0625_-74.4795_columbus-first-landing.jpg"
+  },
+  {
+    "id": "vasco-da-gama-s-arrival-in-calicut",
+    "title": "Vasco Da Gama's Arrival in Calicut",
+    "year": 1498,
+    "lat": 11.2588,
+    "lng": 75.7877,
+    "slug": "vasco-da-gama-s-arrival-in-calicut",
+    "image": "/all_360_images/1498_11.2588_75.7877_vasco-da-gama-s-arrival-in-calicut.jpg"
+  },
+  {
+    "id": "unveiling-of-the-sistine-chapel-ceiling",
+    "title": "Unveiling of the Sistine Chapel Ceiling",
+    "year": 1512,
+    "lat": 41.9029,
+    "lng": 12.4534,
+    "slug": "unveiling-of-the-sistine-chapel-ceiling",
+    "image": "/all_360_images/1512_41.9029_12.4534_unveiling-of-the-sistine-chapel-ceiling.jpg"
+  },
+  {
+    "id": "martin-luther-posts-95-theses",
+    "title": "Martin Luther Posts 95 Theses",
+    "year": 1517,
+    "lat": 51.866,
+    "lng": 12.645,
+    "slug": "martin-luther-posts-95-theses",
+    "image": "/all_360_images/1517_51.8660_12.6450_martin-luther-posts-95-theses.jpg"
+  },
+  {
+    "id": "magellan-s-expedition-departs",
+    "title": "Magellan's Expedition Departs",
+    "year": 1519,
+    "lat": 37.3857,
+    "lng": -5.9961,
+    "slug": "magellan-s-expedition-departs",
+    "image": "/all_360_images/1519_37.3857_-5.9961_magellan-s-expedition-departs.jpg"
+  },
+  {
+    "id": "magellan-s-death",
+    "title": "Magellan's Death",
+    "year": 1521,
+    "lat": 10.301,
+    "lng": 123.998,
+    "slug": "magellan-s-death",
+    "image": "/all_360_images/1521_10.3010_123.9980_magellan-s-death.jpg"
+  },
+  {
+    "id": "pizarro-s-capture-of-atahualpa",
+    "title": "Pizarro's Capture of Atahualpa",
+    "year": 1532,
+    "lat": -7.1557,
+    "lng": -78.5137,
+    "slug": "pizarro-s-capture-of-atahualpa",
+    "image": "/all_360_images/1532_-7.1557_-78.5137_pizarro-s-capture-of-atahualpa.jpg"
+  },
+  {
+    "id": "copernicus-publishes-de-revolutionibus-orbium-coelestium",
+    "title": "Copernicus Publishes de Revolutionibus Orbium Coelestium",
+    "year": 1543,
+    "lat": 54.3547,
+    "lng": 19.6847,
+    "slug": "copernicus-publishes-de-revolutionibus-orbium-coelestium",
+    "image": "/all_360_images/1543_54.3547_19.6847_copernicus-publishes-de-revolutionibus-orbium-coelestium.jpg"
+  },
+  {
+    "id": "battle-of-lepanto",
+    "title": "Battle of Lepanto",
+    "year": 1571,
+    "lat": 38.3,
+    "lng": 21.2833,
+    "slug": "battle-of-lepanto",
+    "image": "/all_360_images/1571_38.3000_21.2833_battle-of-lepanto.jpg"
+  },
+  {
+    "id": "defeat-of-the-spanish-armada",
+    "title": "Defeat of the Spanish Armada",
+    "year": 1588,
+    "lat": 50.3629,
+    "lng": -4.1352,
+    "slug": "defeat-of-the-spanish-armada",
+    "image": "/all_360_images/1588_50.3629_-4.1352_defeat-of-the-spanish-armada.jpg"
+  },
+  {
+    "id": "founding-of-jamestown",
+    "title": "Founding of Jamestown",
+    "year": 1607,
+    "lat": 37.2285,
+    "lng": -76.7825,
+    "slug": "founding-of-jamestown",
+    "image": "/all_360_images/1607_37.2285_-76.7825_founding-of-jamestown.jpg"
+  },
+  {
+    "id": "shah-jahan-lays-foundation-stone-of-taj-mahal",
+    "title": "Shah Jahan Lays Foundation Stone of Taj Mahal",
+    "year": 1631,
+    "lat": 27.175,
+    "lng": 78.0416,
+    "slug": "shah-jahan-lays-foundation-stone-of-taj-mahal",
+    "image": "/all_360_images/1631_27.1750_78.0416_shah-jahan-lays-foundation-stone-of-taj-mahal.jpg"
+  },
+  {
+    "id": "galileo-s-trial-for-heresy",
+    "title": "Galileo's Trial for Heresy",
+    "year": 1633,
+    "lat": 41.8986,
+    "lng": 12.477,
+    "slug": "galileo-s-trial-for-heresy",
+    "image": "/all_360_images/1633_41.8986_12.4770_galileo-s-trial-for-heresy.jpg"
+  },
+  {
+    "id": "signing-of-the-treaty-of-westphalia",
+    "title": "Signing of the Treaty of Westphalia",
+    "year": 1648,
+    "lat": 52.2785,
+    "lng": 8.0483,
+    "slug": "signing-of-the-treaty-of-westphalia",
+    "image": "/all_360_images/1648_52.2785_8.0483_signing-of-the-treaty-of-westphalia.jpg"
+  },
+  {
+    "id": "execution-of-charles-i",
+    "title": "Execution of Charles I",
+    "year": 1649,
+    "lat": 51.5034,
+    "lng": -0.1264,
+    "slug": "execution-of-charles-i",
+    "image": "/all_360_images/1649_51.5034_-0.1264_execution-of-charles-i.jpg"
+  },
+  {
+    "id": "glorious-revolution",
+    "title": "Glorious Revolution",
+    "year": 1688,
+    "lat": 51.5036,
+    "lng": -0.1265,
+    "slug": "glorious-revolution",
+    "image": "/all_360_images/1688_51.5036_-0.1265_glorious-revolution.jpg"
+  },
+  {
+    "id": "salem-witch-trials-begin",
+    "title": "Salem Witch Trials Begin",
+    "year": 1692,
+    "lat": 42.5444,
+    "lng": -71.0189,
+    "slug": "salem-witch-trials-begin",
+    "image": "/all_360_images/1692_42.5444_-71.0189_salem-witch-trials-begin.jpg"
+  },
+  {
+    "id": "peter-the-great-founds-st-petersburg",
+    "title": "Peter the Great Founds St Petersburg",
+    "year": 1703,
+    "lat": 59.9497,
+    "lng": 30.3168,
+    "slug": "peter-the-great-founds-st-petersburg",
+    "image": "/all_360_images/1703_59.9497_30.3168_peter-the-great-founds-st-petersburg.jpg"
+  },
+  {
+    "id": "battle-of-poltava",
+    "title": "Battle of Poltava",
+    "year": 1709,
+    "lat": 49.6425,
+    "lng": 34.4988,
+    "slug": "battle-of-poltava",
+    "image": "/all_360_images/1709_49.6425_34.4988_battle-of-poltava.jpg"
+  },
+  {
+    "id": "lisbon-earthquake",
+    "title": "Lisbon Earthquake",
+    "year": 1755,
+    "lat": 38.7077,
+    "lng": -9.136,
+    "slug": "lisbon-earthquake",
+    "image": "/all_360_images/1755_38.7077_-9.1360_lisbon-earthquake.jpg"
+  },
+  {
+    "id": "landing-of-captain-cook",
+    "title": "Landing of Captain Cook",
+    "year": 1770,
+    "lat": -34.004,
+    "lng": 151.183,
+    "slug": "landing-of-captain-cook",
+    "image": "/all_360_images/1770_-34.0040_151.1830_landing-of-captain-cook.jpg"
+  },
+  {
+    "id": "boston-tea-party",
+    "title": "Boston Tea Party",
+    "year": 1773,
+    "lat": 42.3533,
+    "lng": -71.0506,
+    "slug": "boston-tea-party",
+    "image": "/all_360_images/1773_42.3533_-71.0506_boston-tea-party.jpg"
+  },
+  {
+    "id": "signing-of-the-declaration-of-independence",
+    "title": "Signing of the Declaration of Independence",
+    "year": 1776,
+    "lat": 39.9488,
+    "lng": -75.1498,
+    "slug": "signing-of-the-declaration-of-independence",
+    "image": "/all_360_images/1776_39.9488_-75.1498_signing-of-the-declaration-of-independence.jpg"
+  },
+  {
+    "id": "signing-of-the-declaration-of-independence",
+    "title": "Signing of the Declaration of Independence",
+    "year": 1776,
+    "lat": 39.9489,
+    "lng": -75.15,
+    "slug": "signing-of-the-declaration-of-independence",
+    "image": "/all_360_images/1776_39.9489_-75.1500_signing-of-the-declaration-of-independence.jpg"
+  },
+  {
+    "id": "first-fleet-arrival",
+    "title": "First Fleet Arrival",
+    "year": 1788,
+    "lat": -33.8587,
+    "lng": 151.2104,
+    "slug": "first-fleet-arrival",
+    "image": "/all_360_images/1788_-33.8587_151.2104_first-fleet-arrival.jpg"
+  },
+  {
+    "id": "declaration-of-the-rights-of-man-and-of-the-citizen",
+    "title": "Declaration of the Rights of Man and of the Citizen",
+    "year": 1789,
+    "lat": 48.7997,
+    "lng": 2.1261,
+    "slug": "declaration-of-the-rights-of-man-and-of-the-citizen",
+    "image": "/all_360_images/1789_48.7997_2.1261_declaration-of-the-rights-of-man-and-of-the-citizen.jpg"
+  },
+  {
+    "id": "execution-of-louis-xvi",
+    "title": "Execution of Louis Xvi",
+    "year": 1793,
+    "lat": 48.8655,
+    "lng": 2.3218,
+    "slug": "execution-of-louis-xvi",
+    "image": "/all_360_images/1793_48.8655_2.3218_execution-of-louis-xvi.jpg"
+  },
+  {
+    "id": "signing-of-the-treaty-of-ghent",
+    "title": "Signing of the Treaty of Ghent",
+    "year": 1814,
+    "lat": 51.0543,
+    "lng": 3.7226,
+    "slug": "signing-of-the-treaty-of-ghent",
+    "image": "/all_360_images/1814_51.0543_3.7226_signing-of-the-treaty-of-ghent.jpg"
+  },
+  {
+    "id": "battle-of-waterloo",
+    "title": "Battle of Waterloo",
+    "year": 1815,
+    "lat": 50.6789,
+    "lng": 4.4072,
+    "slug": "battle-of-waterloo",
+    "image": "/all_360_images/1815_50.6789_4.4072_battle-of-waterloo.jpg"
+  },
+  {
+    "id": "first-passenger-railway-journey",
+    "title": "First Passenger Railway Journey",
+    "year": 1825,
+    "lat": 54.6053,
+    "lng": -1.6378,
+    "slug": "first-passenger-railway-journey",
+    "image": "/all_360_images/1825_54.6053_-1.6378_first-passenger-railway-journey.jpg"
+  },
+  {
+    "id": "gettysburg-address",
+    "title": "Gettysburg Address",
+    "year": 1863,
+    "lat": 39.8143,
+    "lng": -77.2325,
+    "slug": "gettysburg-address",
+    "image": "/all_360_images/1863_39.8143_-77.2325_gettysburg-address.jpg"
+  },
+  {
+    "id": "assassination-of-abraham-lincoln",
+    "title": "Assassination of Abraham Lincoln",
+    "year": 1865,
+    "lat": 38.8978,
+    "lng": -77.0267,
+    "slug": "assassination-of-abraham-lincoln",
+    "image": "/all_360_images/1865_38.8978_-77.0267_assassination-of-abraham-lincoln.jpg"
+  },
+  {
+    "id": "opening-of-the-suez-canal",
+    "title": "Opening of the Suez Canal",
+    "year": 1869,
+    "lat": 31.2642,
+    "lng": 32.2902,
+    "slug": "opening-of-the-suez-canal",
+    "image": "/all_360_images/1869_31.2642_32.2902_opening-of-the-suez-canal.jpg"
+  },
+  {
+    "id": "opening-of-the-brooklyn-bridge",
+    "title": "Opening of the Brooklyn Bridge",
+    "year": 1883,
+    "lat": 40.7052,
+    "lng": -73.9967,
+    "slug": "opening-of-the-brooklyn-bridge",
+    "image": "/all_360_images/1883_40.7052_-73.9967_opening-of-the-brooklyn-bridge.jpg"
+  },
+  {
+    "id": "battle-of-adwa",
+    "title": "Battle of Adwa",
+    "year": 1896,
+    "lat": 14.167,
+    "lng": 38.9,
+    "slug": "battle-of-adwa",
+    "image": "/all_360_images/1896_14.1670_38.9000_battle-of-adwa.jpg"
+  },
+  {
+    "id": "first-modern-olympic-games",
+    "title": "First Modern Olympic Games",
+    "year": 1896,
+    "lat": 37.95,
+    "lng": 23.7333,
+    "slug": "first-modern-olympic-games",
+    "image": "/all_360_images/1896_37.9500_23.7333_first-modern-olympic-games.jpg"
+  },
+  {
+    "id": "assassination-of-empress-elisabeth",
+    "title": "Assassination of Empress Elisabeth",
+    "year": 1898,
+    "lat": 46.2081,
+    "lng": 6.1554,
+    "slug": "assassination-of-empress-elisabeth",
+    "image": "/all_360_images/1898_46.2081_6.1554_assassination-of-empress-elisabeth.jpg"
+  },
+  {
+    "id": "first-flight-of-the-wright-brothers",
+    "title": "First Flight of the Wright Brothers",
+    "year": 1903,
+    "lat": 36.027,
+    "lng": -75.68,
+    "slug": "first-flight-of-the-wright-brothers",
+    "image": "/all_360_images/1903_36.0270_-75.6800_first-flight-of-the-wright-brothers.jpg"
+  },
+  {
+    "id": "assassination-of-archduke-franz-ferdinand",
+    "title": "Assassination of Archduke Franz Ferdinand",
+    "year": 1914,
+    "lat": 43.8584,
+    "lng": 18.4286,
+    "slug": "assassination-of-archduke-franz-ferdinand",
+    "image": "/all_360_images/1914_43.8584_18.4286_assassination-of-archduke-franz-ferdinand.jpg"
+  },
+  {
+    "id": "signing-of-the-treaty-of-versailles",
+    "title": "Signing of the Treaty of Versailles",
+    "year": 1919,
+    "lat": 48.804,
+    "lng": 2.1204,
+    "slug": "signing-of-the-treaty-of-versailles",
+    "image": "/all_360_images/1919_48.8040_2.1204_signing-of-the-treaty-of-versailles.jpg"
+  },
+  {
+    "id": "discovery-of-tutankhamun-s-tomb",
+    "title": "Discovery of Tutankhamun's Tomb",
+    "year": 1922,
+    "lat": 25.74,
+    "lng": 32.601,
+    "slug": "discovery-of-tutankhamun-s-tomb",
+    "image": "/all_360_images/1922_25.7400_32.6010_discovery-of-tutankhamun-s-tomb.jpg"
+  },
+  {
+    "id": "stock-market-crash-black-tuesday",
+    "title": "Stock Market Crash Black Tuesday",
+    "year": 1929,
+    "lat": 40.7067,
+    "lng": -74.0113,
+    "slug": "stock-market-crash-black-tuesday",
+    "image": "/all_360_images/1929_40.7067_-74.0113_stock-market-crash-black-tuesday.jpg"
+  },
+  {
+    "id": "mahatma-gandhi-s-salt-march",
+    "title": "Mahatma Gandhi's Salt March",
+    "year": 1930,
+    "lat": 20.8406,
+    "lng": 72.8257,
+    "slug": "mahatma-gandhi-s-salt-march",
+    "image": "/all_360_images/1930_20.8406_72.8257_mahatma-gandhi-s-salt-march.jpg"
+  },
+  {
+    "id": "pearl-harbor-attack",
+    "title": "Pearl Harbor Attack",
+    "year": 1941,
+    "lat": 21.3653,
+    "lng": -157.9497,
+    "slug": "pearl-harbor-attack",
+    "image": "/all_360_images/1941_21.3653_-157.9497_pearl-harbor-attack.jpg"
+  },
+  {
+    "id": "battle-of-stalingrad",
+    "title": "Battle of Stalingrad",
+    "year": 1943,
+    "lat": 48.7422,
+    "lng": 44.5372,
+    "slug": "battle-of-stalingrad",
+    "image": "/all_360_images/1943_48.7422_44.5372_battle-of-stalingrad.jpg"
+  },
+  {
+    "id": "declaration-of-indian-independence",
+    "title": "Declaration of Indian Independence",
+    "year": 1947,
+    "lat": 28.6562,
+    "lng": 77.241,
+    "slug": "declaration-of-indian-independence",
+    "image": "/all_360_images/1947_28.6562_77.2410_declaration-of-indian-independence.jpg"
+  },
+  {
+    "id": "assassination-of-mohandas-gandhi",
+    "title": "Assassination of Mohandas Gandhi",
+    "year": 1948,
+    "lat": 28.6133,
+    "lng": 77.2064,
+    "slug": "assassination-of-mohandas-gandhi",
+    "image": "/all_360_images/1948_28.6133_77.2064_assassination-of-mohandas-gandhi.jpg"
+  },
+  {
+    "id": "tiananmen-square-protests",
+    "title": "Tiananmen Square Protests",
+    "year": 1989,
+    "lat": 39.9042,
+    "lng": 116.3917,
+    "slug": "tiananmen-square-protests",
+    "image": "/all_360_images/1989_39.9042_116.3917_tiananmen-square-protests.jpg"
+  }
+]

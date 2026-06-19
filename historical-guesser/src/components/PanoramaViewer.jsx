@@ -12,8 +12,9 @@ import { useEffect, useRef, useState } from 'react';
  *
  * Props:
  *   - src: string  -> path to the equirectangular image (e.g. /assets/images/loc-001.jpg)
+ *   - loading: boolean -> show a spinner while the AI scene is generating
  */
-export default function PanoramaViewer({ src }) {
+export default function PanoramaViewer({ src, loading = false }) {
   const containerRef = useRef(null);
   const [offset, setOffset] = useState(0); // horizontal pan in px
   const dragState = useRef({ dragging: false, startX: 0, startOffset: 0 });
@@ -67,8 +68,15 @@ export default function PanoramaViewer({ src }) {
       aria-label="360 degree historical panorama"
     >
       {!src && (
-        <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
-          No panorama loaded
+        <div className="pano-empty">
+          {loading ? (
+            <>
+              <div className="spinner" />
+              <span>Generating the scene…</span>
+            </>
+          ) : (
+            <span>No panorama loaded</span>
+          )}
         </div>
       )}
     </div>
