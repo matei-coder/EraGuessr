@@ -29,7 +29,9 @@ export default function App() {
   const [name, setName] = useState(() => localStorage.getItem(NAME_KEY) || '');
   const [current, setCurrent] = useState(() => pickRandom(locations));
   const [guess, setGuess] = useState(null);
-  const [guessYear, setGuessYear] = useState(() => midYear(pickRandom(locations)));
+  // `current` is already bound from the previous hook, so the slider starts
+  // centered on the first location's own year range.
+  const [guessYear, setGuessYear] = useState(() => midYear(current));
   const [submitted, setSubmitted] = useState(false);
   const [saveState, setSaveState] = useState('idle'); // idle|saving|saved|error
   const [ai, setAi] = useState({ url: null, loading: false, error: null });
