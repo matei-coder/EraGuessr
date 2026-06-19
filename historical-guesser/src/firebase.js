@@ -1,45 +1,28 @@
 // Firebase initialization for Historical Guesser.
 //
-// Project: hackbase-7fb0e (web app "historical-guesser").
+// Project: student-ai26buc-7284 ("Romania Student AI Hack"), dedicated to this
+// game, so we use its (default) Firestore database directly.
 // The web apiKey below is NOT a secret — it only identifies the project. Access
-// is controlled by Firestore Security Rules (see firestore.rules) and, for
-// production, Firebase App Check. See FIREBASE.md.
+// is controlled by Firestore Security Rules (see firestore.rules). The Gemini
+// key used for image generation is separate and lives in .env.local (see
+// src/lib/ai.js).
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import {
-  getAI,
-  getGenerativeModel,
-  GoogleAIBackend,
-  ResponseModality,
-} from 'firebase/ai';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCBc0p9p7LZ7ZoZQ8wT4bdsP3W15esTVTw',
-  authDomain: 'hackbase-7fb0e.firebaseapp.com',
-  projectId: 'hackbase-7fb0e',
-  storageBucket: 'hackbase-7fb0e.firebasestorage.app',
-  messagingSenderId: '405204582716',
-  appId: '1:405204582716:web:7ef44a9a1fafaa06c95e39',
-  measurementId: 'G-Y2XT73RJYK',
+  apiKey: 'AIzaSyAexHcWftUo3wBsIM7_JjvYpfPP1pU_zj0',
+  authDomain: 'student-ai26buc-7284.firebaseapp.com',
+  projectId: 'student-ai26buc-7284',
+  storageBucket: 'student-ai26buc-7284.firebasestorage.app',
+  messagingSenderId: '943107530569',
+  appId: '1:943107530569:web:075c52067783c4b0f18498',
 };
 
 export const app = initializeApp(firebaseConfig);
 
 // Cloud Firestore — used for the realtime leaderboard.
-// We use a DEDICATED database ("eraguessr") instead of "(default)" so this game
-// never touches the rules/data of the other app sharing this project.
-export const db = getFirestore(app, 'eraguessr');
+export const db = getFirestore(app);
 
-// Firebase AI Logic — Gemini Developer API backend.
-// Provision once with: `firebase init ailogic` (else PERMISSION_DENIED).
-const ai = getAI(app, { backend: new GoogleAIBackend() });
-
-// Image generation model (Nano Banana). Imagen models are deprecated
-// (shut down 2026-06-24), so we use the stable Gemini image model.
-export const imageModel = getGenerativeModel(ai, {
-  model: 'gemini-2.5-flash-image',
-  generationConfig: {
-    responseModalities: [ResponseModality.TEXT, ResponseModality.IMAGE],
-  },
-});
+// NOTE: image generation does NOT go through Firebase AI Logic — it calls the
+// Gemini API directly with a key (see src/lib/ai.js).

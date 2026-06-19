@@ -5,7 +5,6 @@
     "rewrites": [{ "source": "**", "destination": "/index.html" }]
   },
   "firestore": {
-    "database": "eraguessr",
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   }

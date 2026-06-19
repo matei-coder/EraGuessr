@@ -1,15 +1,16 @@
 # Firebase integration
 
-This demo wires three Firebase products into the Historical Guesser game.
+Live demo: **https://student-ai26buc-7284.web.app**
 
 | Product | What it does here | Code |
 | --- | --- | --- |
 | **Cloud Firestore** | Realtime, cross-device leaderboard | `src/lib/leaderboard.js`, `src/components/Leaderboard.jsx` |
-| **Firebase AI Logic** (Gemini image model) | "✨ Generate scene with AI" — creates the period panorama on demand | `src/lib/ai.js` |
+| **Gemini API** (Nano Banana image model) | "✨ Generate scene with AI" — creates the period panorama on demand | `src/lib/ai.js` |
 | **Firebase Hosting** | Static deploy of the Vite build | `firebase.json` |
 
-Project: **`hackbase-7fb0e`** · Web app: **historical-guesser**
-Config lives in `src/firebase.js` (the web `apiKey` is not a secret — it only identifies the project; access is governed by Security Rules).
+Project: **`student-ai26buc-7284`** ("Romania Student AI Hack") · Web app: **historical-guesser**.
+The Firebase web config in `src/firebase.js` is not a secret (it only identifies
+the project; access is governed by Security Rules).
 
 ---
 
@@ -18,6 +19,7 @@ Config lives in `src/firebase.js` (the web `apiKey` is not a secret — it only 
 ```bash
 cd historical-guesser
 npm install
+# create .env.local with your Gemini key (see below), then:
 npm run dev          # http://localhost:5173
 ```
 
@@ -26,65 +28,43 @@ browser/device to watch scores sync in realtime.
 
 ---
 
-## Prerequisites for the live features
+## Image generation (Gemini API key)
 
-### 1. Firestore leaderboard — dedicated database (isolated & safe)
-
-To avoid touching the `(default)` database (shared with the *Stefan Gym Tracker*
-app), this game uses a **dedicated Firestore database named `eraguessr`**:
-
-- Client: `getFirestore(app, 'eraguessr')` in `src/firebase.js`.
-- Rules deploy targets it via `"database": "eraguessr"` in `firebase.json`, so
-  `firebase deploy --only firestore:rules` only ever affects this game's DB.
-
-Creating an additional (named) database **requires the Blaze plan** (the free
-Spark plan only allows the single default DB). Once the project is on Blaze:
+`src/lib/ai.js` calls the Gemini API directly (model `gemini-2.5-flash-image`,
+"Nano Banana" — Imagen is avoided because all Imagen models shut down
+2026-06-24). The key is read from `VITE_GEMINI_API_KEY`:
 
 ```bash
-cd historical-guesser
-# 1. Create the isolated database (one-time), colocated with the default DB:
-firebase firestore:databases:create eraguessr \
-  --location=europe-west3 --edition=standard --project hackbase-7fb0e
-
-# 2. Deploy the rules to it (safe — only the eraguessr DB):
-firebase deploy --only firestore:rules --project hackbase-7fb0e
+# historical-guesser/.env.local  (gitignored via "*.local" — never commit)
+VITE_GEMINI_API_KEY=your-gemini-key
 ```
 
-The rules are a **reviewed prototype**: the leaderboard is intentionally public
-and unauthenticated, writes are strictly validated (fixed schema, type/size
-checks, score may only grow, max 10,000 per round). Before a real launch, add
-Firebase Auth + App Check and tie writes to `request.auth.uid`.
-
-### 2. AI scene generation — provision AI Logic + Blaze
-
-```bash
-cd historical-guesser
-firebase init ailogic       # one-time: enables the Gemini Developer API
-```
-
-- Requires the **Blaze (pay-as-you-go)** billing plan (image models are paid).
-- Without this, the "Generate scene with AI" button shows a friendly error and
-  the rest of the game keeps working.
-- Model: `gemini-2.5-flash-image` (Nano Banana). We avoid Imagen because all
-  Imagen models shut down 2026-06-24.
-- **App Check is recommended** to stop quota abuse from unauthorized clients.
-  Not enabled in this demo — generation is behind a manual button to limit
-  calls. Add reCAPTCHA Enterprise App Check before sharing widely.
+> ⚠️ **Key exposure:** `vite build` inlines `VITE_*` vars into the client
+> bundle, so a **public deploy exposes the key** in the site's JS. Mitigations:
+> 1. **Restrict the key** in Google Cloud Console → APIs & Services →
+>    Credentials → (your key): set an **HTTP referrer** restriction to
+>    `https://student-ai26buc-7284.web.app/*` and an **API** restriction to the
+>    *Generative Language API* only.
+> 2. **Rotate** the key after the event.
+> 3. For a proper production setup, move the call behind a Cloud Function proxy
+>    or use **Firebase AI Logic + App Check** so no key ships to the client.
 
 ---
 
-## Deploy to Firebase Hosting
+## Leaderboard — Firestore rules
+
+The `players` collection uses the rules in `firestore.rules` (already deployed to
+this project's `(default)` database). The leaderboard is intentionally public and
+unauthenticated; writes are strictly validated (fixed schema, type/size checks,
+score may only grow, max 10,000 per round). It is a **reviewed prototype** — for
+a real launch add Firebase Auth + App Check and tie writes to `request.auth.uid`.
 
 ```bash
 cd historical-guesser
-npm run build
-firebase deploy --only hosting --project hackbase-7fb0e
-# → https://hackbase-7fb0e.web.app
+firebase deploy --only firestore:rules --project student-ai26buc-7284
 ```
 
----
-
-## Data model
+### Data model
 
 Collection `players`, document id = slug of the display name:
 
@@ -99,3 +79,14 @@ players/{slug} = {
 
 Leaderboard query: `orderBy('total', 'desc')` + `limit(10)` (single-field index,
 created automatically — no composite index needed).
+
+---
+
+## Deploy to Firebase Hosting
+
+```bash
+cd historical-guesser
+npm run build
+firebase deploy --only hosting --project student-ai26buc-7284
+# → https://student-ai26buc-7284.web.app
+```
